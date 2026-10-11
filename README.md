@@ -4,9 +4,6 @@
 Описываешь настройки обычным классом, а LilConfig создаёт файл, загружает поля и сохраняет изменения.
 Наследоваться от специального класса или писать сериализатор для каждой модели не нужно.
 
-Для генерации Java-моделей из существующих `.yml` / `.yaml` есть
-[плагин для IntelliJ IDEA](intellij-plugin/README.md) с предпросмотром и сохранением defaults.
-
 ```java
 var config = LilConfig.provider(plugin).load(Settings.class);
 Settings settings = config.get();
