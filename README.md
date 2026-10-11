@@ -435,3 +435,7 @@ mvn install
 
 Бэкенд использует [`YamlConfiguration`](https://hub.spigotmc.org/javadocs/spigot/org/bukkit/configuration/file/YamlConfiguration.html)
 и стандартный контракт [`ConfigurationSerializable`](https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/configuration/serialization/ConfigurationSerializable.html).
+
+## Лицензия
+
+Проект распространяется под лицензией [MIT](LICENSE).
