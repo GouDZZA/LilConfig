@@ -1,4 +1,5 @@
-package by.likebebras.lilconfig.annotation;
+package by.likebebras.lilconfig.annotation.validation;
+
 import java.lang.annotation.*;
 
 /** Inclusive numeric bounds, checked on load and save. */

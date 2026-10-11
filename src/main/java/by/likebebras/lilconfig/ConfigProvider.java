@@ -1,7 +1,12 @@
 package by.likebebras.lilconfig;
 
-import by.likebebras.lilconfig.annotation.ConfigFile;
-import by.likebebras.lilconfig.internal.ConfigMapper;
+import by.likebebras.lilconfig.adapter.ConfigAdapter;
+import by.likebebras.lilconfig.annotation.mapping.ConfigFile;
+import by.likebebras.lilconfig.annotation.mapping.KeysFormat;
+import by.likebebras.lilconfig.format.KeyFormat;
+import by.likebebras.lilconfig.internal.mapping.ConfigMapper;
+import by.likebebras.lilconfig.internal.mapping.ModelFactory;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.LinkedHashMap;
@@ -29,7 +34,7 @@ public final class ConfigProvider {
     public <T> Config<T> load(Class<T> type) { return load(fileName(type), type); }
 
     public <T> Config<T> load(String fileName, Class<T> type) {
-        return load(fileName, type, () -> ConfigMapper.defaults(type));
+        return load(fileName, type, () -> ModelFactory.defaults(type));
     }
 
     /** The supplier provides record defaults or customized POJO defaults on every reload. */
@@ -40,7 +45,9 @@ public final class ConfigProvider {
     public synchronized <T> Config<T> load(String fileName, Class<T> type, Supplier<? extends T> defaults) {
         Objects.requireNonNull(type, "type");
         Objects.requireNonNull(defaults, "defaults");
-        return new Config<>(resolve(fileName), type, defaults, new ConfigMapper(Map.copyOf(adapters)));
+        KeysFormat format = type.getAnnotation(KeysFormat.class);
+        return new Config<>(resolve(fileName), type, defaults, new ConfigMapper(Map.copyOf(adapters),
+                format == null ? KeyFormat.IDENTITY : format.value()));
     }
 
     private static String fileName(Class<?> type) {

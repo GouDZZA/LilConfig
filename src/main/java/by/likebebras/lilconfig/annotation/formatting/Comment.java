@@ -1,4 +1,5 @@
-package by.likebebras.lilconfig.annotation;
+package by.likebebras.lilconfig.annotation.formatting;
+
 import java.lang.annotation.*;
 
 /** Header on the root class, or block comments on a field/record component. */

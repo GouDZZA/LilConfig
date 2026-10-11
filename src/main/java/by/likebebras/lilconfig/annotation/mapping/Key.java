@@ -1,4 +1,5 @@
-package by.likebebras.lilconfig.annotation;
+package by.likebebras.lilconfig.annotation.mapping;
+
 import java.lang.annotation.*;
 
 /** Literal YAML key, not a dotted path. Defaults to the Java field name. */

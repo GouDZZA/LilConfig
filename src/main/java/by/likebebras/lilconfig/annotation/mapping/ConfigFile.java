@@ -1,4 +1,5 @@
-package by.likebebras.lilconfig.annotation;
+package by.likebebras.lilconfig.annotation.mapping;
+
 import java.lang.annotation.*;
 
 /** File name relative to the provider directory. */

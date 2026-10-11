@@ -1,4 +1,5 @@
-package by.likebebras.lilconfig.annotation;
+package by.likebebras.lilconfig.annotation.validation;
+
 import java.lang.annotation.*;
 
 /** Requires a non-null value after applying defaults. */

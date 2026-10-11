@@ -1,4 +1,5 @@
-package by.likebebras.lilconfig.annotation;
+package by.likebebras.lilconfig.annotation.mapping;
+
 import java.lang.annotation.*;
 
 /** Excludes a field. Static, transient and synthetic fields are also ignored. */

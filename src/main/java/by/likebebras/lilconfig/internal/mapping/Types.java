@@ -1,6 +1,7 @@
-package by.likebebras.lilconfig.internal;
+package by.likebebras.lilconfig.internal.mapping;
 
 import by.likebebras.lilconfig.ConfigException;
+
 import java.lang.reflect.*;
 import java.util.*;
 

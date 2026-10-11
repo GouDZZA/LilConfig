@@ -1,7 +1,10 @@
 package by.likebebras.lilconfig;
 
-import by.likebebras.lilconfig.internal.ConfigMapper;
-import by.likebebras.lilconfig.internal.YamlDocument;
+import by.likebebras.lilconfig.internal.mapping.ConfigMapper;
+import by.likebebras.lilconfig.internal.tree.EncodedConfig;
+import by.likebebras.lilconfig.internal.yaml.YamlDocument;
+import by.likebebras.lilconfig.internal.yaml.YamlFormatter;
+
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
@@ -32,7 +35,7 @@ public final class Config<T> {
     public synchronized Config<T> set(T value) {
         Objects.requireNonNull(value, "value");
         try {
-            mapper.write(value, type);
+            encode(value);
             this.value = value;
             return this;
         } catch (RuntimeException e) {
@@ -46,7 +49,7 @@ public final class Config<T> {
             boolean missing = Files.notExists(file);
             YamlDocument document = YamlDocument.read(file);
             T loaded = mapper.read(document.values(), type, defaults.get());
-            ConfigMapper.Encoded encoded = mapper.write(loaded, type);
+            EncodedConfig encoded = encode(loaded);
             if (missing) {
                 document.apply(encoded, type);
                 document.save(file);
@@ -61,13 +64,19 @@ public final class Config<T> {
     /** Saves known fields, preserving unknown object fields and existing comments. */
     public synchronized void save() {
         try {
-            ConfigMapper.Encoded encoded = mapper.write(value, type);
+            EncodedConfig encoded = encode(value);
             YamlDocument document = YamlDocument.read(file);
             document.apply(encoded, type);
             document.save(file);
         } catch (Exception e) {
             throw failure("save", e);
         }
+    }
+
+    private EncodedConfig encode(T model) {
+        EncodedConfig encoded = mapper.write(model, type);
+        YamlFormatter.validate(encoded, type);
+        return encoded;
     }
 
     private ConfigException failure(String action, Exception e) {
